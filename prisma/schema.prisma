@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  role      Role      @default(CONSULTANT)
+  tasks     Task[]
+  projects  Project[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+enum Role {
+  ADMIN
+  LEAD_CONSULTANT
+  SENIOR_CONSULTANT
+  FINANCE
+}
+
+model Client {
+  id        String    @id @default(cuid())
+  name      String
+  contact   String
+  email     String?
+  source    String
+  projects  Project[]
+  leads     Lead[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Lead {
+  id            String        @id @default(cuid())
+  clientId      String
+  client        Client        @relation(fields: [clientId], references: [id])
+  package       PackageType
+  stage         PipelineStage
+  valueKES      Float
+  probability   Float
+  expectedClose DateTime
+  notes         String?       @db.Text
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+enum PackageType {
+  STARTER
+  GROWTH
+  ENTERPRISE
+  CUSTOM
+}
+
+enum PipelineStage {
+  NEW_LEAD
+  CONTACTED
+  QUALIFIED
+  DISCOVERY_CALL
+  PROPOSAL_SENT
+  NEGOTIATION
+  WON
+  LOST
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  name        String
+  invoiceNo   String        @unique
+  clientId    String
+  client      Client        @relation(fields: [clientId], references: [id])
+  ownerId     String
+  owner       User          @relation(fields: [ownerId], references: [id])
+  status      ProjectStatus
+  progress    Int           @default(0)
+  startDate   DateTime
+  dueDate     DateTime
+  tasks       Task[]
+  invoices    Invoice[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+enum ProjectStatus {
+  ACTIVE
+  COMPLETED
+  ON_HOLD
+  OVERDUE
+  PENDING
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignedTo  String
+  user        User       @relation(fields: [assignedTo], references: [id])
+  title       String
+  description String?    @db.Text
+  priority    Priority
+  status      TaskStatus
+  dueDate     DateTime
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum TaskStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  ON_HOLD
+}
+
+model Invoice {
+  id          String        @id @default(cuid())
+  projectId   String
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  amount      Float
+  amountPaid  Float         @default(0)
+  status      PaymentStatus
+  dueDate     DateTime
+  paidDate    DateTime?
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+enum PaymentStatus {
+  PAID
+  PARTIAL
+  PENDING
+  OVERDUE
+}
