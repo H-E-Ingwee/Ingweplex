@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { CheckCircle2, ClipboardList, Clock3, Flag, ShieldCheck } from 'lucide-react';
 import { Badge, Card } from '@/components/ui';
 import { initialProjects } from '@/lib/mock-data';
-import { formatKES, formatShortDate, getRelativeRisk, loadLocalData, saveLocalData } from '@/lib/utils';
-import type { Project, ProjectTask } from '@/lib/mock-data';
+import { formatShortDate, getRelativeRisk, loadLocalData, saveLocalData } from '@/lib/utils';
+import type { Project } from '@/lib/mock-data';
 
 const STORAGE_PROJECTS = 'ingweplex-projects';
 
