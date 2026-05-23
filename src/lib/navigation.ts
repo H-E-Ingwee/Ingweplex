@@ -1,34 +1,34 @@
-import { Activity, Briefcase, FileText, Settings, Users } from 'lucide-react';
+import { BarChart3, Briefcase, DollarSign, LayoutDashboard, TrendingUp, Users } from 'lucide-react';
 
 export const navigation = [
   {
-    title: 'Customers',
-    description: 'Manage client records, contacts, and customer history.',
-    href: '/customers',
+    title: 'Dashboard',
+    description: 'Executive overview and business pulse.',
+    href: '/',
+    icon: LayoutDashboard,
+  },
+  {
+    title: 'CRM',
+    description: 'Sales pipeline and lead management.',
+    href: '/crm',
     icon: Users,
   },
   {
-    title: 'Sales',
-    description: 'Track orders, invoices, and revenue performance.',
-    href: '/sales',
+    title: 'PMO',
+    description: 'Project delivery, milestones, and risks.',
+    href: '/pmo',
     icon: Briefcase,
   },
   {
-    title: 'Reports',
-    description: 'View business metrics and financial summaries.',
-    href: '/reports',
-    icon: FileText,
+    title: 'Finance',
+    description: 'Revenue, cash flow, and collections.',
+    href: '/finance',
+    icon: DollarSign,
   },
   {
-    title: 'Settings',
-    description: 'Configure teams, roles, and company preferences.',
-    href: '/settings',
-    icon: Settings,
+    title: 'Marketing',
+    description: 'Engagement, campaigns, and content ROI.',
+    href: '/marketing',
+    icon: TrendingUp,
   },
-];
-
-export const stats = [
-  { label: 'Monthly sales', value: '$48.2K', icon: Activity },
-  { label: 'Active customers', value: '1,274', icon: Users },
-  { label: 'Open deals', value: '32', icon: Briefcase },
 ];

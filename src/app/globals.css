@@ -14,6 +14,7 @@ html {
 body {
   min-height: 100vh;
   background: #f8fafc;
+  color: #0f172a;
 }
 
 * {
@@ -25,4 +26,22 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+.kanban-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.kanban-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.kanban-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.kanban-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
